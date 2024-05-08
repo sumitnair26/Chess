@@ -5,6 +5,7 @@ const chess_js_1 = require("chess.js");
 const Messages_1 = require("./Messages");
 class Game {
     constructor(player1, player2) {
+        this.moveCount = 0;
         this.player1 = player1;
         this.player2 = player2;
         this.board = new chess_js_1.Chess();
@@ -36,6 +37,14 @@ class Game {
             console.log(error);
             return;
         }
+        if (this.moveCount % 2 === 0 && socket !== this.player1) {
+            console.log('Invalid Move');
+            return;
+        }
+        if (this.moveCount % 2 === 1 && socket !== this.player2) {
+            console.log('Invalid Move');
+            return;
+        }
         if (this.board.isGameOver()) {
             this.player1.emit(JSON.stringify({
                 type: Messages_1.GAME_OVER,
@@ -50,7 +59,7 @@ class Game {
                 }
             }));
         }
-        if (this.board.moves.length % 2 === 0) {
+        if (this.moveCount % 2 === 0) {
             this.player2.send(JSON.stringify({
                 type: Messages_1.MOVE,
                 payload: move
@@ -62,6 +71,7 @@ class Game {
                 payload: move
             }));
         }
+        this.moveCount++;
     }
 }
 exports.Game = Game;

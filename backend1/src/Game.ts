@@ -48,7 +48,7 @@ export class Game {
                 return;
             }
 
-            if (this.moveCount % 2 === 0 && socket !== this.player2) {
+            if (this.moveCount % 2 === 1 && socket !== this.player2) {
                 console.log('Invalid Move');
                 return;
             }
