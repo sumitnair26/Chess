@@ -1,3 +1,4 @@
+import { WebSocket } from "ws";
 import { Game } from "./Game";
 import { INIT_GAME, MOVE } from "./Messages";
 
