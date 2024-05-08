@@ -14,6 +14,7 @@ export class GameManager {
 
     addUser(socket: WebSocket){
         this.users.push(socket);
+        this.addHandler(socket);
     }
 
     removeUser(socket: WebSocket){
@@ -21,7 +22,7 @@ export class GameManager {
         //Stop the Game here as the user has left
     }
 
-    private handleMessage(socket: WebSocket) {
+    private addHandler(socket: WebSocket) {
         socket.on("message", (data)=> {
             const message = JSON.parse(data.toString());
 
