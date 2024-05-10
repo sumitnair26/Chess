@@ -1,3 +1,4 @@
+import { Button } from "../components/Button"
 import { ChessBoard } from "../components/ChessBoard"
 
 export const Game = () => {
@@ -8,7 +9,7 @@ export const Game = () => {
                     <ChessBoard />
                 </div>
                 <div className="col-span-2 bg-green-200 w-full">
-                    <button>Play</button>
+                    <Button> Play</Button>
                 </div>
             </div>
         </div>
