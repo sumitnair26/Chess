@@ -9,7 +9,16 @@ export const ChessBoard = ({ board }: {
     }| null)[][]
 } ) => {
     return <div className="text-white-200">
-        ChessBoard Component
+        {board.map((row, i) =>{
+            return <div key={i} className="flex">
+                {row.map((square, j)=>{
+                    return <div key={j} className={`w-16 h-16 ${(i+j)%2 ===0 ? `bg-green-500` : `bg-white` }`}> 
+                        {square ? square.type:""}
+                    </div>
+                })} 
+
+            </div>
+        })}
     </div>
 }
 
