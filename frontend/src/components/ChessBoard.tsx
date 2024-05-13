@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Color, PieceSymbol } from "../../node_modules/chess.js/dist/types/chess";
 import { MOVE } from "../screens/Game";
 
-export const ChessBoard = ({ board }: {
+export const ChessBoard = ({ board, socket }: {
     board : ({
         square: Square;
         type: PieceSymbol;
         color: Color;
     }| null)[][];
-    socket: WebSocket;
+    socket: WebSocket
 } ) => {
     const [from, setFrom] = useState<null | Square>(null);
     const [to, sendTo] = useState<null | Square>(null);
@@ -17,21 +17,22 @@ export const ChessBoard = ({ board }: {
         {board.map((row, i) =>{
             return <div key={i} className="flex">
                 {row.map((square, j)=>{
+                    const squareRepresentation = String.fromCharCode(65 + (j %8 )) + "" + (8-i) as Square;
                     return <div onClick={()=>{
                         if (!from) {
-                            setFrom(square?.square ?? null);
+                            setFrom(squareRepresentation);
                         } else {
-                            sendTo(square?.square ?? null);
+                            // sendTo(square?.square ?? null);
                             socket.send(JSON.stringify({
                                 type:MOVE,
                                 payload: {
                                     from,
-                                    to
-                                }
+                                    to: squareRepresentation
+                                }                            
                             }))
                             console.log({
                                 from, 
-                                to
+                                to: squareRepresentation
                             });
                         }
                     }} key={j} className={`w-16 h-16 ${(i+j)%2 ===0 ? `bg-green-500` : `bg-white` }`}> 
