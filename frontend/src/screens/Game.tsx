@@ -22,14 +22,14 @@ export const Game = () => {
             console.log(message);
             switch (message.type) {
                 case INIT_GAME:
-                    setChess(new Chess());
+                    //setChess(new Chess());
                     setBoard(chess.board());
                     console.log("Game initialized");
                     break;
                 case MOVE:
                     const move = message.payload;
                     chess.move(move);
-                    setBoard(chess.board);
+                    setBoard(chess.board());
                     console.log("Move Made");
                     break;
                 case GAME_OVER:

@@ -14,7 +14,6 @@ export const ChessBoard = ({ chess, board, socket, setBoard }: {
     socket: WebSocket
 } ) => {
     const [from, setFrom] = useState<null | Square>(null);
-    const [to, sendTo] = useState<null | Square>(null);
     return <div className="text-white-200">
         {board.map((row, i) =>{
             return <div key={i} className="flex">
@@ -28,8 +27,10 @@ export const ChessBoard = ({ chess, board, socket, setBoard }: {
                             socket.send(JSON.stringify({
                                 type:MOVE,
                                 payload: {
-                                    from,
-                                    to: squareRepresentation
+                                    move: {
+                                        from,
+                                        to: squareRepresentation
+                                    }
                                 }                            
                             }))
                            //sendTo(squareRepresentation);
