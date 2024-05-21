@@ -23,29 +23,23 @@ class Game {
             }
         }));
     }
-    /*
-        validation
-        is it the users move
-        is the move valid
-        Validate the type of move
-    */
     makeMove(socket, move) {
-        try {
-            this.board.move(move);
-        }
-        catch (error) {
-            console.log(error);
-            return;
-        }
+        // validate the type of move using zod
         if (this.moveCount % 2 === 0 && socket !== this.player1) {
-            console.log('Invalid Move');
             return;
         }
         if (this.moveCount % 2 === 1 && socket !== this.player2) {
-            console.log('Invalid Move');
+            return;
+        }
+        try {
+            this.board.move(move);
+        }
+        catch (e) {
+            console.log(e);
             return;
         }
         if (this.board.isGameOver()) {
+            // Send the game over message to both players
             this.player1.emit(JSON.stringify({
                 type: Messages_1.GAME_OVER,
                 payload: {
@@ -58,6 +52,7 @@ class Game {
                     winner: this.board.turn() === "w" ? "black" : "white"
                 }
             }));
+            return;
         }
         if (this.moveCount % 2 === 0) {
             this.player2.send(JSON.stringify({
